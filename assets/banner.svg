@@ -1,0 +1,26 @@
+<svg width="1200" height="300" viewBox="0 0 1200 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#22d3ee"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="300" fill="url(#bg)"/>
+  <circle cx="140" cy="150" r="70" fill="none" stroke="url(#accent)" stroke-width="3" opacity="0.6"/>
+  <circle cx="140" cy="150" r="46" fill="none" stroke="url(#accent)" stroke-width="3" opacity="0.8"/>
+  <circle cx="140" cy="150" r="8" fill="#22d3ee"/>
+  <circle cx="140" cy="80" r="6" fill="#6366f1"/>
+  <circle cx="204" cy="150" r="6" fill="#6366f1"/>
+  <circle cx="140" cy="220" r="6" fill="#6366f1"/>
+  <circle cx="76" cy="150" r="6" fill="#6366f1"/>
+  <line x1="140" y1="150" x2="140" y2="80" stroke="#6366f1" stroke-width="2" opacity="0.7"/>
+  <line x1="140" y1="150" x2="204" y2="150" stroke="#6366f1" stroke-width="2" opacity="0.7"/>
+  <line x1="140" y1="150" x2="140" y2="220" stroke="#6366f1" stroke-width="2" opacity="0.7"/>
+  <line x1="140" y1="150" x2="76" y2="150" stroke="#6366f1" stroke-width="2" opacity="0.7"/>
+  <text x="270" y="140" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="52" font-weight="700" fill="#f8fafc">DeepResearch AI</text>
+  <text x="272" y="180" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="20" fill="#94a3b8">Multi-agent research, planned, verified, and cited — end to end</text>
+</svg>

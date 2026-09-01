@@ -1,0 +1,13 @@
+apiVersion: 1
+
+datasources:
+  - name: Prometheus
+    type: prometheus
+    # Fixed (not auto-generated) so the provisioned dashboard JSON
+    # (docker/grafana/provisioning/dashboards/json/) can reference this
+    # datasource by a stable id instead of a name lookup.
+    uid: prometheus
+    access: proxy
+    url: http://prometheus:9090
+    isDefault: true
+    editable: false

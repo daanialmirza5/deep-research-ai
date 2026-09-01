@@ -1,0 +1,16 @@
+apiVersion: 1
+
+providers:
+  - name: DeepResearch AI
+    orgId: 1
+    folder: ""
+    type: file
+    disableDeletion: false
+    updateIntervalSeconds: 30
+    options:
+      path: /etc/grafana/provisioning/dashboards/json
+      foldersFromFilesStructure: false
+# Actual dashboard JSON lives in ./json/ (added Phase 13 — this is
+# infra/ops observability, distinct from Phase 11's Analytics Dashboard,
+# which is an in-app Next.js page over app-level session/token data, not a
+# Grafana dashboard over Prometheus's own infra/HTTP/Celery/Postgres metrics).

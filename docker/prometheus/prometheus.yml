@@ -1,0 +1,24 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: backend
+    metrics_path: /api/v1/metrics
+    static_configs:
+      - targets: ["backend:8000"]
+
+  - job_name: celery
+    # danihodovic/celery-exporter's own default port (see docker-compose.yml's
+    # celery-exporter service — a separate sidecar container, not the worker
+    # image itself, which doesn't speak Prometheus's exposition format).
+    static_configs:
+      - targets: ["celery-exporter:9808"]
+
+  - job_name: postgres
+    static_configs:
+      - targets: ["postgres-exporter:9187"]
+
+  - job_name: prometheus
+    static_configs:
+      - targets: ["localhost:9090"]

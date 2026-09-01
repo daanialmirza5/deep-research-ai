@@ -1,0 +1,95 @@
+# Production override — usage:
+#   docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+#
+# Removes dev bind-mounts/hot-reload, stops publishing data-layer ports to the
+# host, and adds resource limits. Everything not overridden here is inherited
+# from docker-compose.yml.
+
+services:
+  postgres:
+    ports: []          # not reachable from the host in prod, only from dra-network
+    deploy:
+      resources:
+        limits:
+          cpus: "2"
+          memory: 2G
+
+  redis:
+    ports: []
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: 512M
+
+  minio:
+    ports:
+      - "${MINIO_CONSOLE_PORT:-9001}:9001"   # console kept for admin access; API port dropped
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: 1G
+
+  backend:
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers 4
+    ports: []          # only reachable via nginx's /api/+/ws/ proxy in prod, not directly
+    volumes: []          # no bind mounts — image is immutable in prod
+    deploy:
+      resources:
+        limits:
+          cpus: "2"
+          memory: 2G
+
+  worker:
+    command: celery -A app.workers.celery_app worker --loglevel=warning --concurrency=4
+    volumes: []
+    deploy:
+      resources:
+        limits:
+          cpus: "2"
+          memory: 3G
+
+  beat:
+    volumes: []
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 256M
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: ../docker/frontend/Dockerfile
+      target: runner        # production stage of the multi-stage build (see docker/frontend/Dockerfile)
+      args:
+        # Baked into the static bundle at build time, not read at container
+        # runtime — see docker/frontend/Dockerfile's builder-stage comment.
+        # Override in .env if the API isn't reachable at these defaults
+        # (e.g. a real domain instead of localhost).
+        NEXT_PUBLIC_API_BASE_URL: ${NEXT_PUBLIC_API_BASE_URL:-http://localhost/api/v1}
+        NEXT_PUBLIC_WS_BASE_URL: ${NEXT_PUBLIC_WS_BASE_URL:-ws://localhost/ws}
+    volumes: []
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: 1G
+
+  nginx:
+    restart: always
+
+  celery-exporter:
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: 128M
+
+  postgres-exporter:
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: 128M

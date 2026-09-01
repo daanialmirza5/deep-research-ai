@@ -1,0 +1,66 @@
+# --- Environment / secrets ---
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# --- Node / frontend ---
+node_modules/
+.next/
+out/
+.turbo/
+frontend/dist/
+*.tsbuildinfo
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-store/
+
+# --- Python / backend / ai ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+.venv/
+venv/
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+htmlcov/
+.coverage
+.coverage.*
+dist/
+build/
+
+# --- Celery ---
+celerybeat-schedule
+celerybeat.pid
+
+# --- Docker / data volumes ---
+docker/volumes/
+**/pgdata/
+**/minio-data/
+**/redis-data/
+**/grafana-data/
+
+# --- run.ps1 / stop.ps1 (no-Docker local dev) — portable binaries,
+# Postgres data, and MinIO data. See docs/installation.md. ---
+.tools/
+
+# --- IDE / OS ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# --- Logs ---
+*.log
+logs/
+
+# --- Test / build artifacts ---
+coverage/
+playwright-report/
+test-results/
+
+# --- Local overrides ---
+docker-compose.override.yml

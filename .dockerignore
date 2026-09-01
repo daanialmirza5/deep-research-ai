@@ -1,0 +1,35 @@
+# Applies to docker/backend/Dockerfile and docker/worker/Dockerfile, whose
+# build context is the repo root (see docker-compose.yml). Keeps the context
+# sent to the Docker daemon limited to what those images actually need
+# (backend/, ai/) — everything below is either irrelevant to those images or
+# already excluded by their own COPY lines, so shipping it as build context
+# would only slow builds down.
+
+.git/
+.github/
+
+frontend/
+docker/
+
+docs/
+database/
+*.md
+# backend/pyproject.toml's `readme = "../README.md"` is read by hatchling's
+# build backend even for an editable install (see docker/backend/Dockerfile's
+# `COPY README.md /srv/README.md` comment) — excluding it here would make
+# that explicit COPY fail with a build-context "file not found".
+!README.md
+
+# Python
+**/__pycache__/
+**/*.pyc
+**/.mypy_cache/
+**/.ruff_cache/
+**/.pytest_cache/
+backend/.venv/
+backend/.coverage
+
+# Env/secrets — never send real .env files into a build context
+.env
+.env.*
+!.env.example
