@@ -1,0 +1,14 @@
+# docker/frontend/Dockerfile's build context is ./frontend (see
+# docker-compose.yml). node_modules/.next are reinstalled/rebuilt inside the
+# image by design (see that Dockerfile's deps/builder stages) — shipping the
+# host's own copies as build context would be pure dead weight, and in dev
+# they're bind-mounted over anyway (docker-compose.yml's `frontend.volumes`).
+
+node_modules/
+.next/
+test-results/
+playwright-report/
+coverage/
+.env
+.env.*
+!.env.example

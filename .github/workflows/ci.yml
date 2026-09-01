@@ -1,0 +1,87 @@
+name: CI
+
+# Runs the fast, live-infra-free half of the test matrix on every push/PR:
+# backend (ruff, mypy --strict, pytest across backend/tests + ai/tests) and
+# frontend (eslint, tsc, vitest, next build). Tests gated behind
+# RUN_INTEGRATION_TESTS=1 (real Postgres) or a reachable Ollama server
+# self-skip without either here (see backend/tests/integration/*.py and
+# ai/tests/test_live_ollama.py's own skip guards) — that fuller, real-infra
+# pass (plus the Playwright e2e specs, which need a real Redis broker, a real
+# Celery worker, MinIO, and Ollama end to end) is run locally per
+# docs/installation.md rather than provisioned here, the same two-tier split
+# the test suite has used since Phase 8.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  backend:
+    name: Backend (ruff, mypy, pytest)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install uv
+        run: pip install uv
+
+      - name: Install backend + ai dependencies
+        run: uv pip install --system -e "./backend[dev]"
+
+      - name: Lint (ruff)
+        run: |
+          cd backend
+          ruff check . ../ai
+
+      - name: Type-check (mypy --strict)
+        run: |
+          cd backend
+          mypy app
+          mypy ../ai
+
+      - name: Test (pytest — backend/tests + ai/tests; live-infra-gated tests self-skip)
+        run: |
+          cd backend
+          pytest
+
+  frontend:
+    name: Frontend (eslint, tsc, vitest, build)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install dependencies
+        run: |
+          cd frontend
+          npm ci
+
+      - name: Lint (eslint)
+        run: |
+          cd frontend
+          npm run lint
+
+      - name: Type-check (tsc)
+        run: |
+          cd frontend
+          npm run type-check
+
+      - name: Test (vitest)
+        run: |
+          cd frontend
+          npm test
+
+      - name: Build (next build)
+        run: |
+          cd frontend
+          npm run build
