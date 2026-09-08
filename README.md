@@ -7,10 +7,10 @@
 > Multi-agent AI research system: ask a question, watch a team of specialized agents plan,
 > search, verify, write, and cite a report — backed by a fully local-capable, swappable AI stack.
 
-[![CI](https://github.com/OWNER/deep-research-ai/actions/workflows/ci.yml/badge.svg)](https://github.com/OWNER/deep-research-ai/actions/workflows/ci.yml)
+[![CI](https://github.com/daanialmirza5/deep-research-ai/actions/workflows/ci.yml/badge.svg)](https://github.com/daanialmirza5/deep-research-ai/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Backend coverage](https://img.shields.io/badge/backend%20coverage-65%25-yellow)]()
-[![Release](https://img.shields.io/badge/release-v1.0.0-informational)](https://github.com/OWNER/deep-research-ai/releases/tag/v1.0.0)
+[![Release](https://img.shields.io/badge/release-v1.0.0-informational)](https://github.com/daanialmirza5/deep-research-ai/releases/tag/v1.0.0)
 
 > **Status:** All 15 build phases complete. The full product works end to end: register, create a
 > project, submit a research query, watch a real 10-agent LangGraph pipeline run live, and read
