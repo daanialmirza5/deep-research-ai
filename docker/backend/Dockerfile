@@ -33,14 +33,6 @@ WORKDIR /srv/backend
 # of source edits. The placeholder package dir lets the editable install
 # resolve; it's overwritten by the real source in the next layer (editable
 # installs read from the live directory, so this is safe).
-#
-# backend/pyproject.toml's `readme = "../README.md"` resolves relative to
-# pyproject.toml's own location (/srv/backend/pyproject.toml here), i.e.
-# /srv/README.md — hatchling's editable-install build hard-fails
-# (`OSError: Readme file does not exist`) without it; found only by actually
-# running `uv pip install -e .` against this exact layout outside Docker,
-# not by reading the Dockerfile.
-COPY README.md /srv/README.md
 COPY backend/pyproject.toml ./
 RUN mkdir -p app && touch app/__init__.py && uv pip install -e .
 

@@ -8,7 +8,6 @@ from __future__ import annotations
 import re
 from typing import Any
 
-
 _CITATION_PATTERN = re.compile(r"\[(\d+)\]")
 
 

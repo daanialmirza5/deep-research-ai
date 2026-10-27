@@ -1,17 +1,18 @@
 """Unit tests verifying comparative agent evaluation experiments."""
 
 import unittest
+
 from ai.evaluation.benchmark_dataset import BENCHMARK_DATASET
-from ai.evaluation.harness import EvaluationHarness, AgentVariant
+from ai.evaluation.harness import AgentVariant, EvaluationHarness
 
 
 class TestComparativeExperiment(unittest.TestCase):
     """Verifies baseline vs improved agent comparison metrics and invariant properties."""
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.harness = EvaluationHarness()
 
-    def test_comparative_experiment_execution(self):
+    def test_comparative_experiment_execution(self) -> None:
         summary = self.harness.run_comparative_experiment()
 
         self.assertGreater(len(summary.results), 0)
@@ -22,7 +23,7 @@ class TestComparativeExperiment(unittest.TestCase):
         self.assertGreaterEqual(summary.improved_avg_completion, summary.baseline_avg_completion)
         self.assertLessEqual(summary.improved_avg_hallucination, summary.baseline_avg_hallucination)
 
-    def test_agent_variant_results_structure(self):
+    def test_agent_variant_results_structure(self) -> None:
         results = self.harness.run_all()
         self.assertEqual(len(results), len(BENCHMARK_DATASET))
         for r in results:
