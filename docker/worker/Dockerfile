@@ -23,10 +23,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN useradd --create-home --uid 1000 dra
 WORKDIR /srv/backend
 
-# See docker/backend/Dockerfile's identical line for why README.md has to be
-# copied in — hatchling's editable-install build reads pyproject.toml's
-# `readme = "../README.md"` even here, and hard-fails without it.
-COPY README.md /srv/README.md
 COPY backend/pyproject.toml ./
 RUN mkdir -p app && touch app/__init__.py && uv pip install -e ".[local]"
 

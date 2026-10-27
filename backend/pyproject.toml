@@ -3,7 +3,8 @@ name = "dra-backend"
 version = "0.1.0"
 description = "DeepResearch AI backend — FastAPI API, Celery workers, and the ai/ agent package (imported via PYTHONPATH, see docs/architecture.md)"
 requires-python = ">=3.12"
-readme = "../README.md"
+# No `readme` field: hatchling rejects paths outside this directory, and the
+# project README lives one level up.
 license = { text = "MIT" }
 
 dependencies = [
@@ -14,7 +15,7 @@ dependencies = [
     "slowapi>=0.1.10,<0.2",
 
     # --- Data / persistence ---
-    "sqlalchemy>=2.0.51,<3.0",
+    "sqlalchemy[asyncio]>=2.0.51,<3.0",   # [asyncio] pulls in greenlet, no longer implicit in 2.1
     "alembic>=1.18,<2.0",
     "asyncpg>=0.31,<0.32",
     "psycopg2-binary>=2.9.12,<3.0",   # sync driver, used by Alembic migrations
@@ -165,4 +166,10 @@ ignore_missing_imports = true
 # same story for boto3/botocore (no py.typed marker; boto3-stubs exists but
 # is a large generated-per-service dependency not worth adding for one client).
 module = ["boto3.*", "botocore.*"]
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+# sentence-transformers is the optional `local` extra (worker image only), so
+# it is absent from the dev/CI environment that runs mypy.
+module = "sentence_transformers.*"
 ignore_missing_imports = true

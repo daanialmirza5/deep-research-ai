@@ -9,8 +9,6 @@
 
 [![CI](https://github.com/daanialmirza5/deep-research-ai/actions/workflows/ci.yml/badge.svg)](https://github.com/daanialmirza5/deep-research-ai/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Backend coverage](https://img.shields.io/badge/backend%20coverage-65%25-yellow)]()
-[![Release](https://img.shields.io/badge/release-v1.0.0-informational)](https://github.com/daanialmirza5/deep-research-ai/releases/tag/v1.0.0)
 
 > **Status:** All 15 build phases complete. The full product works end to end: register, create a
 > project, submit a research query, watch a real 10-agent LangGraph pipeline run live, and read
@@ -64,12 +62,10 @@ every agent's input/output persisted and inspectable, not just the final answer.
 - **Observability** — Prometheus + Grafana (HTTP, Celery, and Postgres metrics) alongside the
   in-app Analytics Dashboard, which is product-level data, not infra metrics — see
   [architecture.md § 8](docs/architecture.md#8-deployment-topology-docker-compose-services).
-- **Tested, not just built** — 82+ backend/AI tests, frontend component + e2e tests (Playwright,
-  including a full live pipeline run through the real browser UI), CI on every push. The 65%
-  backend coverage badge is the offline unit-test subset (`pytest --cov`, no live infra); the
-  integration/e2e suites that exercise the rest run opt-in against real Postgres/Redis/MinIO/Ollama
-  — see [CHANGELOG.md](CHANGELOG.md) for the real bugs each phase's live verification actually
-  caught.
+- **Tests** — backend/AI unit tests (pytest), frontend component tests and Playwright e2e tests,
+  run in CI on every push. The offline unit-test subset runs without infrastructure; the
+  integration/e2e suites run opt-in against real Postgres/Redis/MinIO/Ollama — see
+  [CHANGELOG.md](CHANGELOG.md) for bugs caught during live verification.
 
 ## Agent pipeline
 

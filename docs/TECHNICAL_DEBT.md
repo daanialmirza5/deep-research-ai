@@ -1,7 +1,6 @@
 # Deep Research AI — Technical Debt & Architectural Audit
 
 **Repository**: `deep-research-ai`  
-**Status**: Tier 2 Supporting (Passing pytest benchmarks)
 
 ## Prioritized Debt Items
 - **[P1 — High] Streaming WebSocket Updates for Agent Steps**: Current frontend waits for full report completion. Add fine-grained LangGraph streaming tokens and active agent status.

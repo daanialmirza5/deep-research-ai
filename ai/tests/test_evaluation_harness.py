@@ -18,12 +18,12 @@ from ai.evaluation import (
 
 
 class TestEvaluationHarness(unittest.TestCase):
-    def test_extract_inline_citations(self):
+    def test_extract_inline_citations(self) -> None:
         text = "Raft uses randomized election timeouts [1] and log replication [2]. [1] is key."
         indices = extract_inline_citation_indices(text)
         self.assertEqual(indices, [1, 2, 1])
 
-    def test_citation_precision_calculation(self):
+    def test_citation_precision_calculation(self) -> None:
         draft = "According to [1] and [2], the system is fast. [3] is also cited."
         citations = [
             {"title": "Paper 1", "url": "https://example.com/1"},
@@ -33,7 +33,7 @@ class TestEvaluationHarness(unittest.TestCase):
         score = calculate_citation_precision(draft, citations)
         self.assertAlmostEqual(score, 0.6667, places=3)
 
-    def test_citation_precision_with_ground_truth_urls(self):
+    def test_citation_precision_with_ground_truth_urls(self) -> None:
         draft = "Statement with reference [1]."
         citations = [{"title": "Phishing Source", "url": "https://unverified.com"}]
         verified_urls = ["https://arxiv.org/123", "https://official.org"]
@@ -41,13 +41,13 @@ class TestEvaluationHarness(unittest.TestCase):
         score = calculate_citation_precision(draft, citations, valid_source_urls=verified_urls)
         self.assertEqual(score, 0.0)
 
-    def test_citation_recall_calculation(self):
+    def test_citation_recall_calculation(self) -> None:
         draft = "Summary mentions [1] and [3]."
         score = calculate_citation_recall(draft, total_findings_count=4)
         # Cited 2 out of 4 total findings
         self.assertEqual(score, 0.5)
 
-    def test_retrieval_relevance_calculation(self):
+    def test_retrieval_relevance_calculation(self) -> None:
         chunks = [
             {"chunk_text": "Distributed consensus using the Raft algorithm."},
             {"chunk_text": "Generic unrelated text about cooking."},
@@ -58,12 +58,12 @@ class TestEvaluationHarness(unittest.TestCase):
         # 2 out of 3 chunks match
         self.assertAlmostEqual(relevance, 0.6667, places=3)
 
-    def test_hallucination_rate_calculation(self):
+    def test_hallucination_rate_calculation(self) -> None:
         self.assertEqual(calculate_hallucination_rate([], total_claims_count=5), 0.0)
         issues = [{"claim": "Fabricated fact", "issue": "No ground truth support"}]
         self.assertEqual(calculate_hallucination_rate(issues, total_claims_count=4), 0.25)
 
-    def test_task_completion_evaluation(self):
+    def test_task_completion_evaluation(self) -> None:
         complete_state = {
             "plan": "1. Search\n2. Synthesize",
             "research_findings": [{"source": "web", "title": "A", "url": "https://a.com"}],
@@ -75,7 +75,7 @@ class TestEvaluationHarness(unittest.TestCase):
         self.assertTrue(res["is_complete"])
         self.assertEqual(res["completion_rate"], 1.0)
 
-    def test_evaluation_harness_end_to_end(self):
+    def test_evaluation_harness_end_to_end(self) -> None:
         harness = EvaluationHarness()
         results = harness.run_all()
         
