@@ -26,8 +26,6 @@
 |---|---|
 | ![Report](assets/screenshots/02-report.png) | ![Knowledge Base](assets/screenshots/04-knowledge-base.png) |
 
-See it end to end: [assets/screenshots/demo.gif](assets/screenshots/demo.gif)
-
 ## What this is
 
 DeepResearch AI takes a research question and runs it through a graph of ten cooperating agents —
